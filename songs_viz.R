@@ -34,9 +34,9 @@ songs <- songs %>% mutate(Genre = fct_rev(fct_infreq(.$Genre)))
 
 # # Color scheme for each genre
 color_scheme <- c("#F0E442", "#0072B2", "#CC79A7","#E69F00", "#999999")
-# 
+ 
 
-
+# Songs that samples over time by genre
 songs %>% 
   ggplot() + geom_area(aes(Year, fill=Genre),
                        stat = 'bin',
@@ -71,7 +71,7 @@ songs %>% filter(Genre %in% c("Hip-Hop / Rap / R&B", "Electronic / Dance")) %>%
   ggplot() + geom_density(aes(Year, fill=Genre), alpha =.75) + 
   scale_fill_manual(values=color_scheme[4:5]) +
   scale_x_continuous(breaks=year_breaks) + 
-  labs(title="EDM had more sampling 'bursts'",
+  labs(title="EDM had more 'bursts' of interest in Amen, Brother",
        subtitle="Density of songs that sampled over time",
        y="Count") +
 theme_bw()
@@ -103,7 +103,7 @@ ggplot(aes(Genre, Valence)) +
   scale_fill_manual(values=color_scheme[c(1,3,4,5)]) +
   theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
   coord_flip() + theme_bw() +
-  labs(title="EDM and Rock less positive sounding",
+  labs(title="EDM and Rock slightly less positive sounding",
        subtitle="Song valence by genre")
 
 
@@ -146,3 +146,17 @@ tracks %>%
   labs(title = "Hip-Hop has much slower tempo than EDM",
     subtitle="Song tempo (beats/min) by genre")
 
+
+
+tracks %>%
+  ggplot(aes(Energy)) +
+  geom_histogram(aes(y = ..density..),color = "black", fill = "white") + 
+  geom_density(aes(fill=Genre), alpha=.45,
+               bins=35) + 
+  facet_grid(Genre ~.) +
+  scale_fill_manual(values=color_scheme[c(1,3,4,5)]) +
+  theme_bw() + 
+  theme(strip.background = element_blank(),
+        strip.text.y = element_blank()) +
+  labs(title = "Hip-Hop slightly less energetic",
+       subtitle="Song energy by genre")
