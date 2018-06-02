@@ -160,3 +160,4 @@ tracks %>%
         strip.text.y = element_blank()) +
   labs(title = "Hip-Hop slightly less energetic",
        subtitle="Song energy by genre")
+
